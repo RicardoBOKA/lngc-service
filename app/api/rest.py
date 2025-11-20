@@ -1,8 +1,8 @@
 """Endpoint REST comme fallback pour le traitement de messages."""
 
 from fastapi import APIRouter, HTTPException
-from app.models.input import InputMessage
-from app.models.output import OutputSuggestionResponse
+from app.schemas.input import InputMessage
+from app.schemas.output import OutputSuggestionResponse
 from app.handlers.stream_handler import StreamHandler
 from app.utils.logger import get_logger
 

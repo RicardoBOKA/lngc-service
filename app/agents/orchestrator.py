@@ -5,7 +5,7 @@ from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain.output_parsers import PydanticOutputParser
 from langchain_core.runnables import RunnablePassthrough, RunnableLambda
-from app.models.output import OutputSuggestion
+from app.schemas.output import OutputSuggestion
 from app.memory.conversation_memory import ConversationMemory
 from app.config.settings import settings
 from app.utils.logger import get_logger

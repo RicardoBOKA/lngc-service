@@ -3,7 +3,7 @@
 from typing import List, Dict, Any
 from langchain.schema import BaseMessage, HumanMessage, AIMessage
 from langchain_core.chat_history import BaseChatMessageHistory
-from app.models.input import InputMessage
+from app.schemas.input import InputMessage
 from app.utils.logger import get_logger
 
 

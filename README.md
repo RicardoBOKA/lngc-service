@@ -22,7 +22,7 @@ Copilote intelligent en temps réel pour conversations, basé sur LangChain. Ana
 ### 1. Cloner et installer les dépendances
 
 ```bash
-cd /home/ricardo/projects/lngc-service
+cd lngc-service
 pip install -r requirements.txt
 ```
 
@@ -145,7 +145,7 @@ app/
 ├── main.py                          # Point d'entrée FastAPI + WebSocket
 ├── config/
 │   └── settings.py                  # Configuration centralisée (.env)
-├── models/
+├── schemas/
 │   ├── input.py                     # InputMessage (Pydantic)
 │   └── output.py                    # OutputSuggestion (Pydantic)
 ├── memory/

@@ -3,7 +3,7 @@
 import json
 from fastapi import APIRouter, WebSocket, WebSocketDisconnect
 from pydantic import ValidationError
-from app.models.input import InputMessage
+from app.schemas.input import InputMessage
 from app.handlers.stream_handler import StreamHandler
 from app.utils.logger import get_logger
 

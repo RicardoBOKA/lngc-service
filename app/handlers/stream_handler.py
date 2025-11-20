@@ -1,8 +1,8 @@
 """Handler de traitement des messages en streaming."""
 
 from typing import Optional
-from app.models.input import InputMessage
-from app.models.output import OutputSuggestion
+from app.schemas.input import InputMessage
+from app.schemas.output import OutputSuggestion
 from app.memory.conversation_memory import ConversationMemory
 from app.agents.orchestrator import create_orchestrator_agent, invoke_orchestrator
 from app.config.settings import settings

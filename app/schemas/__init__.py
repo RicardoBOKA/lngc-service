@@ -1,7 +1,7 @@
 """Modèles Pydantic pour entrées et sorties."""
 
-from app.models.input import InputMessage
-from app.models.output import OutputSuggestion
+from app.schemas.input import InputMessage
+from app.schemas.output import OutputSuggestion
 
 __all__ = ["InputMessage", "OutputSuggestion"]
 
