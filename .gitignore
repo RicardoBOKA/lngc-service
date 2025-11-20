@@ -65,3 +65,4 @@ dmypy.json
 # Plan files (keep in repo but listed here for reference)
 # *.plan.md
 
+zpriv/
