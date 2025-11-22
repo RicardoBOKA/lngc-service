@@ -9,54 +9,16 @@ from app.schemas.output import OutputSuggestion
 from app.memory.conversation_memory import ConversationMemory
 from app.config.settings import settings
 from app.utils.logger import get_logger
+from app.agents.prompts import get_orchestrator_prompt
 
 
 logger = get_logger(__name__)
 
 
-# Prompt system pour l'agent orchestrateur
-ORCHESTRATOR_SYSTEM_PROMPT = """Tu es un copilote intelligent expert en conversation temps réel, spécialisé dans l'analyse et le conseil stratégique.
-
-Ton rôle est d'écouter une conversation en direct entre un agent et un client, et de fournir des suggestions intelligentes pour guider l'agent vers le succès.
-
-## Tes capacités :
-
-1. **Analyse de sentiment et d'intention** : Comprendre l'état émotionnel et les intentions du client
-2. **Détection de signaux** : Identifier les objections, hésitations, intérêts, points à creuser
-3. **Suggestions tactiques** : Proposer les bonnes questions et relances au bon moment
-4. **Orientation stratégique** : Recommander la direction à prendre pour atteindre l'objectif
-
-## Instructions :
-
-- Analyse le contexte complet de la conversation
-- Identifie les signaux clés dans le dernier message (objection, intérêt, confusion, etc.)
-- Propose 2-3 questions pertinentes que l'agent pourrait poser
-- Détecte les patterns émotionnels et comportementaux
-- Donne une direction stratégique claire et actionnable
-
-## Format de réponse :
-
-{format_instructions}
-
-## Contexte de la conversation :
-
-{conversation_context}
-
-## Dernier message analysé :
-
-Speaker: {speaker}
-Sentiment: {sentiment}
-Emotion: {emotion}
-Texte: "{text}"
-
-## Statistiques de la conversation :
-
-{conversation_stats}
-
-Analyse ce dernier message dans le contexte global et fournis tes suggestions au format JSON."""
-
-
-def create_orchestrator_agent(memory: ConversationMemory):
+def create_orchestrator_agent(
+    memory: ConversationMemory,
+    prompt_version: str | None = None
+):
     """
     Crée l'agent orchestrateur principal.
     
@@ -65,11 +27,17 @@ def create_orchestrator_agent(memory: ConversationMemory):
     
     Args:
         memory: Instance de ConversationMemory pour accéder au contexte
+        prompt_version: Version du prompt à utiliser (v1, v2, ...).
+                       Si None, utilise la version configurée dans settings.
     
     Returns:
         Chaîne LCEL prête à être invoquée
     """
     logger.info("Création de l'agent orchestrateur avec LCEL")
+    
+    # Déterminer la version du prompt à utiliser
+    version = prompt_version or settings.orchestrator_prompt_version
+    logger.info(f"Utilisation du prompt orchestrateur version: {version}")
     
     # Initialiser le LLM
     llm = ChatOpenAI(
@@ -82,9 +50,12 @@ def create_orchestrator_agent(memory: ConversationMemory):
     # Parser de sortie JSON structuré avec Pydantic v1 (via pydantic.v1)
     output_parser = PydanticOutputParser(pydantic_object=OutputSuggestion)
     
+    # Charger le prompt selon la version sélectionnée
+    system_prompt = get_orchestrator_prompt(version=version)
+    
     # Template de prompt
     prompt = ChatPromptTemplate.from_messages([
-        ("system", ORCHESTRATOR_SYSTEM_PROMPT),
+        ("system", system_prompt),
     ])
     
     # Fonction pour préparer les inputs avec le contexte de la mémoire

@@ -4,42 +4,45 @@ import asyncio
 import websockets
 import json
 from typing import Dict, Any
+from test_data_big import TEST_MESSAGES_BIG
 
 
 # Messages de test simulant une conversation de vente
-TEST_MESSAGES = [
-    {
-        "text": "Hello, I'm interested in your product.",
-        "speaker": "client",
-        "sentiment": "positive",
-        "emotion": "neutral"
-    },
-    {
-        "text": "Great! Let me tell you about our features.",
-        "speaker": "agent",
-        "sentiment": "positive",
-        "emotion": "joy"
-    },
-    {
-        "text": "Sounds interesting, but I'm concerned about the pricing.",
-        "speaker": "client",
-        "sentiment": "negative",
-        "emotion": "uncertain"
-    },
-    {
-        "text": "I understand. What's your budget range?",
-        "speaker": "agent",
-        "sentiment": "neutral",
-        "emotion": "neutral"
-    },
-    {
-        "text": "Around $500 per month, but I need to discuss with my team first.",
-        "speaker": "client",
-        "sentiment": "neutral",
-        "emotion": "uncertain"
-    }
-]
+# TEST_MESSAGES = [
+#     {
+#         "text": "Hello, I'm interested in your product.",
+#         "speaker": "client",
+#         "sentiment": "positive",
+#         "emotion": "neutral"
+#     },
+#     {
+#         "text": "Great! Let me tell you about our features.",
+#         "speaker": "agent",
+#         "sentiment": "positive",
+#         "emotion": "joy"
+#     },
+#     {
+#         "text": "Sounds interesting, but I'm concerned about the pricing.",
+#         "speaker": "client",
+#         "sentiment": "negative",
+#         "emotion": "uncertain"
+#     },
+#     {
+#         "text": "I understand. What's your budget range?",
+#         "speaker": "agent",
+#         "sentiment": "neutral",
+#         "emotion": "neutral"
+#     },
+#     {
+#         "text": "Around $500 per month, but I need to discuss with my team first.",
+#         "speaker": "client",
+#         "sentiment": "neutral",
+#         "emotion": "uncertain"
+#     }
+# ]
 
+# Utilise le nouveau message de test volumineux à la place des anciens messages
+TEST_MESSAGES = TEST_MESSAGES_BIG
 
 async def test_websocket(uri: str = "ws://localhost:8000/ws/conversation"):
     """

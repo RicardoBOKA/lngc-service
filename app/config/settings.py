@@ -35,6 +35,9 @@ class Settings(BaseSettings):
     max_memory_messages: int = Field(default=50, alias="MAX_MEMORY_MESSAGES")
     memory_summary_enabled: bool = Field(default=False, alias="MEMORY_SUMMARY_ENABLED")
     
+    # Prompts versioning
+    orchestrator_prompt_version: str = Field(default="v1", alias="ORCHESTRATOR_PROMPT_VERSION")
+    
     class Config:
         env_file = ".env"
         env_file_encoding = "utf-8"
